@@ -14,10 +14,43 @@
 body {
 	font-family: 'Nunito', sans-serif;
 }
+/* Style the list */
+ul.pdp_breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+}
+
+/* Display list items side by side */
+ul.pdp_breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.pdp_breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.pdp_breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.pdp_breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
 </style>
 
-<div class="pdp_jumbotron jumbotron jumbotron-fluid bg-transparent"
-	style="margin: 0px;">
+<ul class="pdp_breadcrumb bg-transparent m-0 px-5">
+	<li><sly data-sly-resource="${'Breadcrumb' @resourceType='core/wcm/components/breadcrumb/v2/breadcrumb'}"></sly></li>
+</ul>
+
+<div class="pdp_jumbotron jumbotron jumbotron-fluid bg-transparent" style="margin: 0px; padding-top:0px">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6">
@@ -32,69 +65,30 @@ body {
 				<div class="card" style="margin: 0px; padding: 0; border: none;">
 					<div class="card-body">
 
-						<h4 class="fs-1" style="color: #f48b29;">${properties.productTitle}<span style="padding-left: 10px;"><img class="img-thumbnail" src="/content/dam/burgerstop/burger-stop-logo/foodType/indian-vegetarian-mark.png" width="30px" height="30px" /></span></h4>
+						<h4 class="fs-1" style="color: #f48b29;" id="pdpProductTitle">${properties.productTitle}<span style="padding-left: 10px;"><img class="img-thumbnail" src="${properties.classificationReference}" width="40px" height="40px" /></span></h4>
 						<p class="text-justify">${properties.description}</p> 
 
 
 						<div class="row">
                         <div class="col-sm"><p>
                                 <strong>Price</strong> &ensp;:&nbsp; <span class="text-secoundry"
-                                    style="text-decoration: line-through;">₹100</span><span
-                                    class="text-danger">&ensp; ₹${properties.price}</span>
+                                    style="text-decoration: line-through;">₹100</span>
+                                    <span class="text-danger" id="pdpPrice">&ensp; ₹${properties.price}</span>
 								</p></div>
                         	<div class="col-sm d-flex justify-content-center"><p class="text-justify"><i class="fas fa-taco"></i>  ${properties.cal}</p></div>
 
                         </div>
                         <p class="text-justify list-group-item mb-3"><strong>Warning</strong> : <i class="fas fa-exclamation-triangle"></i>  ${properties.warn}</p>
 
-						<form method="get" action="cart.html">
-							<div class="row">
-								<div class="col-sm">
-									<div class="form-group">
-										<label><strong>Quantity :</strong></label>
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<button type="button"
-													class="quantity-left-minus btn btn-secondary btn-number"
-													data-type="minus" data-field="">
-													<i class="fa fa-minus"></i>
-												</button>
-											</div>
-											<input type="text" class="form-control" id="quantity"
-												name="quantity" min="1" max="100" value="1">
-											<div class="input-group-append">
-												<button type="button"
-													class="quantity-right-plus btn btn-secondary btn-number"
-													data-type="plus" data-field="">
-													<i class="fa fa-plus"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm">
-									<div class="form-group">
-										<label for="color"><strong>Cheese :</strong> </label> <select id="color"
-											name="color" class="form-control">
-											<option>Soft cheese</option>
-											<option>Semi-soft cheese</option>
-											<option>Medium-hard cheese</option>
-											<option>Hard cheese</option>
-										</select>
-									</div>
-								</div>
-							</div>
-						</form>
-
-						 <div class="reviews_product p-3 mb-2">
+						 <!--<div class="reviews_product p-3 mb-2">
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 								class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 								class="fa fa-star"></i> (4/5) <a class="pull-right"
 								href="#reviews">View all reviews</a>
-						</div>
+						</div>-->
 
 						<div>
-							<button type="button" class="btn btn-lg btn-block"
+							<button type="button" class="btn btn-lg btn-block pdpCart"
 								style="background-color: #f48b29; color: white;">
 								<i class="fa fa-cart-plus"
 									style="font-size: 25px; color: white;"></i> Add to cart
@@ -107,51 +101,46 @@ body {
 	</div>
 </div>
 <script>
-	$(document)
-			.ready(
-					function() {
-						var quantity = 1;
+ $(".pdpCart").click(function(){
+   alert("hello");
+  var price = $("#pdpPrice").text();
 
-						$('.quantity-right-plus').click(function(e) {
-							e.preventDefault();
-							var quantity = parseInt($('#quantity').val());
-							$('#quantity').val(quantity + 1);
-						});
+  var name =  $("#pdpProductTitle").text();
 
-						$('.quantity-left-minus').click(function(e) {
-							e.preventDefault();
-							var quantity = parseInt($('#quantity').val());
-							if (quantity > 1) {
-								$('#quantity').val(quantity - 1);
-							}
-						});
+	console.log(typeof price);
+    console.log(name);
+});
+  /*var eachCookie;
+  var Id;
+  var cookieArray = document.cookie.split(";");
+  for(var i = 0;i<cookieArray.length;i++){
+    eachCookie = cookieArray[i];
+    if(eachCookie.includes("name")){
+      Id = cookieArray[i];
+      break;
+    }
+  }
 
-						var $star_rating = $('.star-rating .fa');
+console.log(eachCookie);
+  
+       $.ajax({
+           type: 'POST',
+            url: '/bin/aem-burgerstop/cart',
+            data : JSON.stringify({
+                name : name,
+                price : price,
+                quantity : "1",
+                userId : Id.substring(Id.indexOf("=")+1,Id.length)
+            }),
+            contentType : "application/json",
+            dataType: 'json'
 
-						var SetRatingStar = function() {
-							return $star_rating
-									.each(function() {
-										if (parseInt($star_rating.siblings(
-												'input.rating-value').val()) >= parseInt($(
-												this).data('rating'))) {
-											return $(this).removeClass(
-													'fa-star-o').addClass(
-													'fa-star');
-										} else {
-											return $(this).removeClass(
-													'fa-star').addClass(
-													'fa-star-o');
-										}
-									});
-						};
+        });
+        console.log(name);
+        console.log(price);
+		console.log();
+    console.log(Id);
+        console.log("clicked");
 
-						$star_rating.on('click', function() {
-							$star_rating.siblings('input.rating-value').val(
-									$(this).data('rating'));
-							return SetRatingStar();
-						});
-
-						SetRatingStar();
-
-					});
+    })*/
 </script>
