@@ -73,7 +73,7 @@ ul.pdp_breadcrumb li a:hover {
                         <div class="col-sm"><p>
                                 <strong>Price</strong> &ensp;:&nbsp; <span class="text-secoundry"
                                     style="text-decoration: line-through;">₹100</span>
-                                    <span class="text-danger" id="pdpPrice">&ensp; ₹${properties.price}</span>
+                                    <span class="text-danger" id="pdpPrice">₹${properties.price}</span>
 								</p></div>
                         	<div class="col-sm d-flex justify-content-center"><p class="text-justify"><i class="fas fa-taco"></i>  ${properties.cal}</p></div>
 
@@ -102,26 +102,27 @@ ul.pdp_breadcrumb li a:hover {
 </div>
 <script>
  $(".pdpCart").click(function(){
-   alert("hello");
+  
   var price = $("#pdpPrice").text();
-
+  price = price.substring(1,price.length);
   var name =  $("#pdpProductTitle").text();
 
-	console.log(typeof price);
+
+	console.log(price);
     console.log(name);
-});
-  /*var eachCookie;
-  var Id;
-  var cookieArray = document.cookie.split(";");
-  for(var i = 0;i<cookieArray.length;i++){
+
+var eachCookie;
+var Id;
+var cookieArray = document.cookie.split(";");
+for(var i = 0;i<cookieArray.length;i++){
     eachCookie = cookieArray[i];
     if(eachCookie.includes("name")){
       Id = cookieArray[i];
       break;
     }
   }
-
 console.log(eachCookie);
+
   
        $.ajax({
            type: 'POST',
@@ -134,13 +135,11 @@ console.log(eachCookie);
             }),
             contentType : "application/json",
             dataType: 'json'
-
         });
         console.log(name);
         console.log(price);
 		console.log();
     console.log(Id);
         console.log("clicked");
-
-    })*/
+    })
 </script>
